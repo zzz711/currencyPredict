@@ -31,12 +31,20 @@ for year in range(2000,  now.year + 1):
 
 #req = urllib.request.urlopen("http://api.fixer.io/2000-01-03").read().decode('utf8')
 #reader = codecs.getreader("utf-8")
-for jsn in data:
-        print(jsn["rates"]["USD"])
+#for jsn in data:
+#        print(jsn["rates"]["USD"])
 
 
-# GET THE FEDERAL FUNDS RATE
+# GET THE USD FEDERAL FUNDS RATE
+print("USD FEDERAL FUNDS RATE:")
 federalFundsReq = urllib.request.urlopen("https://www.quandl.com/api/v3/datasets/FRED/FEDFUNDS.json").read().decode('utf8')
 federalFunds = json.loads(federalFundsReq)
-for month in federalFunds['dataset']['data'] :
+#for month in federalFunds['dataset']['data'] :
+#        print(month)
+
+# GET THE RMB CHINA PBOC RATE
+print("RMB PBOC RATE:")
+pcobReq = urllib.request.urlopen("https://www.quandl.com/api/v3/datasets/FRED/FEDFUNDS.json").read().decode('utf8')
+pcobRate = json.loads(pcobReq)
+for month in pcobRate['dataset']['data'] :
         print(month)
