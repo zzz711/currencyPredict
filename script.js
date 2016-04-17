@@ -1,31 +1,40 @@
+
 var dataGraph = new Array();
-$(document).ready(function(){
   var dates = getDates(new Date(2000,0,1),new Date());
-    for(var i=0;i<dates.length;i++)
-      pushData(dates[i]); $("#data").html(JSON.stringify(dataGraph[0]));
- drawGraph("AUD");
+  for(var i=0;i<dates.length;i++)
+  $.ajax({
+    url:"http://api.fixer.io/"+dates[i],
+    success: function(data){
+      dataGraph.push(data.rates);
+    },
+    async: false
+  });
+  drawGraph("AUD");
+
+
   $("#USD").click(function(){
     drawGraph("USD");
-  });
-  $("#AUD").click(function(){
-    drawGraph("AUD");
+    var f = new Dygraph(
+      document.getElementById("graph2"),
+      "https://www.quandl.com/api/v3/datasets/FRED/FEDFUNDS.csv?api_key=sDBU-xbmyL1mf9zz2Gw1&start_date=2000-01-01"
+    );
   });
   $("#GBP").click(function(){
     drawGraph("GBP");
+    var f = new Dygraph(
+      document.getElementById("graph2"),
+      "https://www.quandl.com/api/v3/datasets/FRED/GBP12MD156N.csv?api_key=sDBU-xbmyL1mf9zz2Gw1&start_date=2000-01-01"
+    );
   });
   $("#CAD").click(function(){
     drawGraph("CAD");
+    var f = new Dygraph(
+      document.getElementById("graph2"),
+      "https://www.quandl.com/api/v3/datasets/BOC/V122530.csv?api_key=sDBU-xbmyL1mf9zz2Gw1&start_date=2000-01-01"
+    );
   });
-  bankRate();
-});
-function bankRate(){
-  $.ajax({  url:"http://adamnathanielwhite.com/random/forex/centralBankRates/canada.json",
-     
-    success: function(data){
-      $("#data").html(JSON.stringify(data));
-    }
-  });
-}
+
+
 function drawGraph(currency){
    var g = new Dygraph(
     // containing div
@@ -50,15 +59,6 @@ function getCurrency(currency){
     rate.push(dataGraph[i][currency]);
   return rate;
 }
-function pushData(date){
-  $.ajax({
-    url:"http://api.fixer.io/"+date,
-    success: function(data){
-      dataGraph.push(data.rates);
-    },
-    async: false
-  });
-}
 function getDates(startDate, stopDate) {
     var dateArray = new Array();
     var currentDate = startDate;
@@ -67,12 +67,7 @@ function getDates(startDate, stopDate) {
       if(month<10)
         month = "0"+ month;
         dateArray.push( (currentDate.getYear()+1900)+"-"+month+"-01")
-        currentDate = currentDate.addMonth(1);
+        currentDate.setMonth(currentDate.getMonth() + 1);
     }
     return dateArray;
-}
-Date.prototype.addMonth = function(month) {
-    var dat = new Date(this.valueOf())
-    dat.setMonth(dat.getMonth() + month);
-    return dat;
 }
