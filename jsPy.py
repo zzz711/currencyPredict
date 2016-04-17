@@ -2,6 +2,7 @@ import urllib.request
 import json
 import codecs
 import datetime
+from operator import itemgetter
 
 now = datetime.datetime.now()
 
@@ -39,6 +40,7 @@ cad = []
 #nzd = []
 #jpy = []
 cny = [] #china
+eur = [] #euro
 
 for datas in data:
 	usd.append(datas["quotes"]["USDUSD"])
@@ -48,25 +50,27 @@ for datas in data:
 	#gbp.append(datas["rates"]["GBP"])
 	#nzd.append(datas["rates"]["NZD"])
 	#jpy.append(datas["rates"]["JPY"])
+	eur.append(datas["quotes"]["USDEUR"])
 	
 
 diction["rates"] = {}
-#diction["rates"]["usd"] = usd
-#diction["rates"]["cad"] = cad
+diction["rates"]["usd"] = usd
+diction["rates"]["cad"] = cad
 diction["rates"]["cny"] = cny
 #diction["rates"]["aud"] = aud
 #diction["rates"]["gbp"] = gbp
 #diction["rates"]["nzd"] = nzd
 #diction["rates"]["jpy"] = jpy
+diction["rates"]["eur"] = eur
 
-
-print(diction)
-
-#print(data[0]["rates"]["USD"])
+#print(diction["rates"]["usd"][0])
 
 #diciton["rate"]["usd"] = data["rates"]["USD"]
 
-#diction["usd"] = data[
+print(diction["rates"]["usd"][0])
+
+#for jon in diction["rates"]["usd"]:
+#	print( jon)
 
 #req = urllib.request.urlopen("http://api.fixer.io/2000-01-03").read().decode('utf8')
 #reader = codecs.getreader("utf-8")
@@ -104,8 +108,26 @@ canadaRate = json.loads(canadaReq)
 #euroReq = urllib.request.urlopen("https://www.quandl.com/api/v3/datasets/SGE/EURIR.json?api_key=iww131CxHzH6-BQL_adz&start_date=1970-01-01&end_date=1970-01-01").read().decode('utf8')
 #euroRate = json.loads(euroReq)
 
-print(americaRate)
-print(chinaRate)
-print(canadaRate)
-      
-        
+#print(americaRate)
+#print(chinaRate)
+#print(canadaRate)
+
+count = 0
+bigLst = []
+while(count < len(diction["rates"]["usd"])):
+	usdTup = ("usd", diction["rates"]["usd"][count])
+	cadTup = ("cad", diction["rates"]["cad"][count])
+	cnyTup = ("cny", diction["rates"]["cny"][count])
+	eurTup = ("eur", diction["rates"]["eur"][count])
+	lst = [usdTup, cadTup, cnyTup, eurTup]
+	lst = sorted(lst, key=lambda tup: tup[1])#[::-1]
+	#print(lst)
+	bigLst.append(lst)
+	count += 1
+	
+print(bigLst)
+
+
+
+
+     
