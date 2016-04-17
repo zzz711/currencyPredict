@@ -37,19 +37,30 @@ for year in range(2000,  now.year + 1):
 
 # GET THE USD FEDERAL FUNDS RATE
 #print("USD FEDERAL FUNDS RATE:")
-federalFundsReq = urllib.request.urlopen("https://www.quandl.com/api/v3/datasets/FRED/FEDFUNDS.json").read().decode('utf8')
-federalFunds = json.loads(federalFundsReq)
+#federalFundsReq = urllib.request.urlopen("https://www.quandl.com/api/v3/datasets/FRED/FEDFUNDS.json").read().decode('utf8')
+federalFundsReq = urllib.request.urlopen("http://adamnathanielwhite.com/random/forex/centralBankRates/america.json").read().decode('utf8')
+americaRate = json.loads(federalFundsReq)
 #for month in federalFunds['dataset']['data'] :
 #        print(month)
 
 # GET THE RMB CHINA PBOC RATE
-#print("RMB PBOC RATE:")
-chinaReq = urllib.request.urlopen("https://www.quandl.com/api/v3/datasets/BCB/17899.json").read().decode('utf8')
-chinaRate = json.loads(pcobReq)
-#for month in pcobRate['dataset']['data'] :
-#        print(month)
-
+#chinaReq = urllib.request.urlopen("https://www.quandl.com/api/v3/datasets/BCB/17899.json").read().decode('utf8')
+chinaReq = urllib.request.urlopen("http://adamnathanielwhite.com/random/forex/centralBankRates/china.json").read().decode('utf8')
+chinaRate = json.loads(chinaReq)
 
 # GET THE AUSTRALIA CENTRAL BANK RATE
-australiaReq = urllib.request.urlopen("https://www.quandl.com/api/v3/datasets/SGE/AUSIR.json?api_key=iww131CxHzH6-BQL_adz&start_date=1970-01-01&end_date=1970-01-01").read().decode('utf8')
-australiaRate = json.loads(pcobReq)
+#australiaReq = urllib.request.urlopen("https://www.quandl.com/api/v3/datasets/SGE/AUSIR.json?api_key=iww131CxHzH6-BQL_adz&start_date=1970-01-01&end_date=1970-01-01").read().decode('utf8')
+#australiaRate = json.loads(australiaReq)
+
+# GET THE BANK OF CANADA BANK RATE
+canadaReq = urllib.request.urlopen("http://adamnathanielwhite.com/random/forex/centralBankRates/canada.json").read().decode('utf8')
+#canadaReq = urllib.request.urlopen("https://www.quandl.com/api/v3/datasets/BOC/V80691310.json?api_key=iww131CxHzH6-BQL_adz").read().decode('utf8')
+canadaRate = json.loads(canadaReq)
+
+# GET THE EURO BANK RATE
+#euroReq = urllib.request.urlopen("https://www.quandl.com/api/v3/datasets/SGE/EURIR.json?api_key=iww131CxHzH6-BQL_adz&start_date=1970-01-01&end_date=1970-01-01").read().decode('utf8')
+#euroRate = json.loads(euroReq)
+
+print(americaRate)
+print(chinaRate)
+print(canadaRate)
