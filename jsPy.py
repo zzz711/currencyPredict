@@ -6,7 +6,8 @@ import datetime
 now = datetime.datetime.now()
 
 data = [] 
-count = 0
+dates = []
+diction = {}
 #url = "http://api.fixer.io/"
 
 for year in range(2000,  now.year + 1):
@@ -19,15 +20,32 @@ for year in range(2000,  now.year + 1):
 		else:
 			mnth = str(month)
 			
-		url = url  + str(year) + "-" + mnth + "-15"
+		url = url  + str(year) + "-" + mnth + "-01"
 		
 		if(year == now.year and month > now.month):
 			break 
 		
 		req = urllib.request.urlopen(url).read().decode('utf8')
 		sn = json.loads(req)
-		data.insert(count, sn)
-		count += 1
+		dates.append( str(year) + "-" + mnth + "-01")
+		data.append(sn)
+		
+diction["dates"] = dates
+
+usd = []
+
+for datas in data:
+	usd.append(datas["rates"]["USD"])
+
+diction["rates"] = {}
+diction["rates"]["usd"] = usd
+print(diction)
+
+#print(data[0]["rates"]["USD"])
+
+#diciton["rate"]["usd"] = data["rates"]["USD"]
+
+#diction["usd"] = data[
 
 #req = urllib.request.urlopen("http://api.fixer.io/2000-01-03").read().decode('utf8')
 #reader = codecs.getreader("utf-8")
@@ -39,12 +57,26 @@ for year in range(2000,  now.year + 1):
 print("USD FEDERAL FUNDS RATE:")
 federalFundsReq = urllib.request.urlopen("https://www.quandl.com/api/v3/datasets/FRED/FEDFUNDS.json").read().decode('utf8')
 federalFunds = json.loads(federalFundsReq)
-#for month in federalFunds['dataset']['data'] :
+for month in federalFunds['dataset']['data'] :
+	diction["exchange"]["usd"] = month[1]
 #        print(month)
+
+#diction
 
 # GET THE RMB CHINA PBOC RATE
 print("RMB PBOC RATE:")
 pcobReq = urllib.request.urlopen("https://www.quandl.com/api/v3/datasets/FRED/FEDFUNDS.json").read().decode('utf8')
 pcobRate = json.loads(pcobReq)
-for month in pcobRate['dataset']['data'] :
-        print(month)
+for month in pcobRate['dataset']['data']:
+	diction["exchange"]["pboc"] = month[1]
+#        print(month[1])        
+        
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
