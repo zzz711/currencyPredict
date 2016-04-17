@@ -10,10 +10,10 @@ dates = []
 diction = {}
 #url = "http://api.fixer.io/"
 
-for year in range(2000,  now.year + 1):
+for year in range(2000, 2001):#,  now.year + 1):
 	for month in range(1, 13):
-		url = "http://api.fixer.io/"
-		
+		#url = "http://api.fixer.io/"
+		url = "http://apilayer.net/api/historical?access_key=dc0ab941b0c142a23dc01ba57144f346&date=" 
 		mnth = month
 		if(month < 10):
 			mnth = "0" + str(month)
@@ -33,12 +33,33 @@ for year in range(2000,  now.year + 1):
 diction["dates"] = dates
 
 usd = []
+cad = []
+#aud = []
+#gbp = []
+#nzd = []
+#jpy = []
+cny = [] #china
 
 for datas in data:
-	usd.append(datas["rates"]["USD"])
+	usd.append(datas["quotes"]["USDUSD"])
+	cad.append(datas["quotes"]["USDCAD"])
+	cny.append(datas["quotes"]["USDCNY"])
+	#aud.append(datas["rates"]["AUD"])
+	#gbp.append(datas["rates"]["GBP"])
+	#nzd.append(datas["rates"]["NZD"])
+	#jpy.append(datas["rates"]["JPY"])
+	
 
 diction["rates"] = {}
-diction["rates"]["usd"] = usd
+#diction["rates"]["usd"] = usd
+#diction["rates"]["cad"] = cad
+diction["rates"]["cny"] = cny
+#diction["rates"]["aud"] = aud
+#diction["rates"]["gbp"] = gbp
+#diction["rates"]["nzd"] = nzd
+#diction["rates"]["jpy"] = jpy
+
+
 print(diction)
 
 #print(data[0]["rates"]["USD"])
